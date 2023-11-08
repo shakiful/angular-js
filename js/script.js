@@ -6,7 +6,7 @@ let app = angular
       //   templateUrl: "../demo.html",
       // })
       .when("/demo", {
-        templateUrl: "../index.html",
+        templateUrl: "../demo.html",
       })
       .when("/index", {
         templateUrl: "../index.html",
@@ -16,7 +16,7 @@ let app = angular
         controller: "MoviesController",
       })
       .otherwise({
-        redirectTo: "/demo",
+        redirectTo: "/index",
       });
     $locationProvider.html5Mode(true);
   })
