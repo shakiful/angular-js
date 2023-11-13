@@ -1,0 +1,21 @@
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+.active {
+  background-color: #CCCCCC; /* Change the background color of the active item to grey */
+  border: 1px solid #000000;
+}

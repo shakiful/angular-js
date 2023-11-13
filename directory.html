@@ -7,27 +7,29 @@
             <i class="ion-search"></i>
           </span>
         </div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by Movie Name"
-          ng-model="movieName"
-        />
+        <input type="text" class="form-control" placeholder="Search by Movie Name" ng-model="movieName" />
       </div>
     </div>
   </div>
 
   <div class="card-columns mt-5">
-    <div
-      class="card"
-      ng-repeat="movie in movies | filter: { Title: movieName } | orderBy: 'Title'"
-    >
-      <img ng-src="{{ movie.Images[0] }}" class="card-img-top" />
+    <div class="card" ng-repeat="movie in movies | filter: { Title: movieName } | orderBy: 'Title'">
+      <img ng-src="{{ movie.Images[0] }}" style="width: 353px;height: 250px;" class="card-img-top" />
       <div class="card-body">
-        <h3 class="card-title">{{ movie.Title }}</h3>
-        <p class="card-text">{{ movie.Plot }}</p>
+        <h4 class="card-title">{{ movie.Title }}</h4>
+        <p class="card-text">{{ movie.Plot | limitTo: plotLimit }}{{ movie.Plot.length > plotLimit ? '...' : ''}} </p>
+        <p ng-show="movie.Plot.length > plotLimit">
+          <a href="#" ng-click="togglePlot(movie)">
+            {{ showFullPlot ? 'See Less' : 'See More' }}
+          </a>
+        </p>
         <p class="small">{{ movie.Released }}</p>
+        <button class="btn btn-dark">Add to Watchlist</button>
       </div>
+    </div>
+    <!-- Displayed when no movies match the filter -->
+    <div ng-if="(movies | filter: { Title: movieName }).length === 0">
+      <h3>No such movie exists.</h3>
     </div>
   </div>
 </div>
