@@ -22,7 +22,7 @@ let app = angular
       })
 
       .otherwise({
-        redirectTo: "/index"
+        redirectTo: "/index",
       });
     $locationProvider.html5Mode(true);
   })
@@ -30,18 +30,31 @@ let app = angular
     $scope.plotLimit = 90;
     $scope.showFullPlot = false;
     $scope.movies = [];
+    $scope.watchlist = [];
     $http.get("../movies.json").then(function (data) {
       $scope.movies = data.data;
     });
 
-    $scope.togglePlot = function(movie) {
+    $scope.togglePlot = function (movie) {
       $scope.showFullPlot = !$scope.showFullPlot;
-  
+
       // Adjust the plot limit based on the toggle
       if ($scope.showFullPlot) {
         $scope.plotLimit = movie.Plot.length;
       } else {
         $scope.plotLimit = 90; // Set it to your initial limit
+      }
+    };
+
+    $scope.addToWatchlist = function (movie) {
+      // Check if the movie is already in the watchlist
+      if (!$scope.watchlist.some((item) => item.Title === movie.Title)) {
+        $scope.watchlist.push({
+          Images: movie.Images,
+          Title: movie.Title,
+          Released: movie.Released,
+          // Add other properties as needed
+        });
       }
     };
   })

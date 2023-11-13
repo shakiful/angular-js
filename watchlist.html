@@ -1,7 +1,7 @@
-<div class="m-3">
-    <h2>Movie List</h2>
-    <table>
-        <thead>
+<div class="container m-3">
+    <h2 class="text-center mt-3">Movie List</h2>
+    <table ng-if="watchlist.length > 0" class="table table-bordered table-striped">
+        <thead class="thead-light">
             <tr>
                 <th>Image</th>
                 <th>Title</th>
@@ -9,8 +9,20 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Movie rows will go here -->
+        <tbody ng-repeat="movie in watchlist">
+            <td><img ng-src="{{ movie.Images[0] }}" class="img-fluid" style="max-width: 100px; max-height: 100px;" />
+            </td>
+            <td>{{ movie.Title }}</td>
+            <td>{{ movie.Released }}</td>
+            <td>
+                <button class="btn btn-success btn-sm">Watched</button>
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </td>
         </tbody>
     </table>
+    <!-- Displayed when no movies match the filter -->
+    <div ng-if="watchlist.length === 0" class="text-center mt-3">
+        <h3>No List Exists.</h3>
+    </div>
+
 </div>
