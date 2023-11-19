@@ -9,11 +9,11 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody ng-repeat="movie in watchlist">
-            <td><img ng-src="{{ movie.Images[0] }}" class="img-fluid" style="max-width: 100px; max-height: 100px;" />
+        <tbody ng-repeat="list in watchlist">
+            <td><img ng-src="{{ list.Images[0] }}" class="img-fluid" style="max-width: 100px; max-height: 100px;" />
             </td>
-            <td>{{ movie.Title }}</td>
-            <td>{{ movie.Released }}</td>
+            <td>{{ list.Title }}</td>
+            <td>{{ list.Released }}</td>
             <td>
                 <button class="btn btn-success btn-sm">Watched</button>
                 <button class="btn btn-danger btn-sm">Delete</button>

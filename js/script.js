@@ -18,7 +18,7 @@ let app = angular
       })
       .when("/watchlist", {
         templateUrl: "../watchlist.html",
-        controller: "MoviesController",
+        controller: "WatchlistController",
       })
 
       .otherwise({
@@ -26,11 +26,38 @@ let app = angular
       });
     $locationProvider.html5Mode(true);
   })
-  .controller("MoviesController", function ($scope, $http) {
+
+  .service("WatchlistService", function () {
+    let watchlist = [];
+
+    return {
+      getWatchlist: function () {
+        return watchlist;
+      },
+      addToWatchlist: function (movie) {
+        let existingMovie = watchlist.find(function (item) {
+          return item.Title === movie.Title;
+        });
+
+        if (!existingMovie) {
+          watchlist.push({
+            Images: movie.Images,
+            Title: movie.Title,
+            Released: movie.Released,
+            // Add other properties as needed
+          });
+          return true; // Movie added successfully
+        }
+        return false; // Movie already exists
+      },
+      // You can add more functions to manage the watchlist data as needed
+    };
+  })
+
+  .controller("MoviesController", function ($scope, $http, WatchlistService) {
     $scope.plotLimit = 90;
     $scope.showFullPlot = false;
     $scope.movies = [];
-    $scope.watchlist = [];
     $scope.moviesPerPage = 6; // Number of movies to show initially
     $scope.moviesToLoad = 3; // Number of movies to load on each "Load More" click
 
@@ -44,11 +71,11 @@ let app = angular
     console.log($scope.displayedMovies);
 
     $scope.loadMore = function () {
-      var currentLength = $scope.displayedMovies.length;
-      var remainingMovies = $scope.movies.length - currentLength;
+      let currentLength = $scope.displayedMovies.length;
+      let remainingMovies = $scope.movies.length - currentLength;
 
       // Load the remaining movies
-      var toLoad =
+      let toLoad =
         remainingMovies > $scope.moviesToLoad
           ? $scope.moviesToLoad
           : remainingMovies;
@@ -71,14 +98,13 @@ let app = angular
     };
 
     $scope.addToWatchlist = function (movie) {
-      // Check if the movie is already in the watchlist
-      // if (!$scope.watchlist.some((item) => item.Title === movie.Title)) {
-      $scope.watchlist.push({
-        Images: movie.Images,
-        Title: movie.Title,
-        Released: movie.Released,
-        // Add other properties as needed
-      });
+      let added = WatchlistService.addToWatchlist(movie);
+      if (added) {
+        console.log("Movie added to watchlist:", movie.Title);
+        console.log(WatchlistService.getWatchlist()); // check watchlist content
+      } else {
+        console.log("Movie already exists in the watchlist!");
+      }
     };
 
     $scope.moviesPerRow = 3; // Default value
@@ -109,6 +135,11 @@ let app = angular
     // };
     // };
   })
+
+  .controller("WatchlistController", function ($scope, WatchlistService) {
+    $scope.watchlist = WatchlistService.getWatchlist();
+  })
+
   .controller("HeaderController", function ($scope, $location) {
     $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
