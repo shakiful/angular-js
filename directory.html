@@ -1,7 +1,11 @@
 <div class="container mt-5" ng-cloak>
   <div class="row">
     <div class="col-md-4 offset-md-4">
-      <select class="form-control mt-2" ng-model="moviesPerRow" ng-change="updateColumns()">
+      <select
+        class="form-control mt-2"
+        ng-model="moviesPerRow"
+        ng-change="updateColumns()"
+      >
         <option value="2">2 Movies per Row</option>
         <option value="3">3 Movies per Row</option>
         <option value="4">4 Movies per Row</option>
@@ -13,25 +17,42 @@
             <i class="ion-search"></i>
           </span>
         </div>
-        <input type="text" class="form-control" placeholder="Search by Movie Name" ng-model="movieName" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by Movie Name"
+          ng-model="movieName"
+        />
       </div>
     </div>
   </div>
 
   <div class="card-columns mt-5">
-    <div class="card" ng-repeat="movie in displayedMovies | filter: { Title: movieName } | orderBy: 'Title'"
-      ng-class="getCardClass()">
-      <img ng-src="{{ movie.Images[0] }}" style="width: 353px;height: 250px;" class="card-img-top" />
+    <div
+      class="card"
+      ng-repeat="movie in displayedMovies | filter: { Title: movieName } | orderBy: 'Title'"
+      ng-class="getCardClass()"
+    >
+      <img
+        ng-src="{{ movie.Images[0] }}"
+        style="width: 353px; height: 250px"
+        class="card-img-top"
+      />
       <div class="card-body">
         <h4 class="card-title">{{ movie.Title }}</h4>
-        <p class="card-text">{{ movie.Plot | limitTo: plotLimit }}{{ movie.Plot.length > plotLimit ? '...' : ''}} </p>
+        <p class="card-text">
+          {{ movie.Plot | limitTo: movie.plotLength }}{{ movie.Plot.length >
+          movie.plotLength ? '...' : ''}}
+        </p>
         <p ng-show="movie.Plot.length > plotLimit">
           <a href="#" ng-click="togglePlot(movie)">
-            {{ showFullPlot ? 'See Less' : 'See More' }}
+            {{ movie.togglePlot ? 'See Less' : 'See More' }}
           </a>
         </p>
         <p class="small">{{ movie.Released }}</p>
-        <button class="btn btn-dark" ng-click="addToWatchlist(movie)">Add to Watchlist</button>
+        <button class="btn btn-dark" ng-click="addToWatchlist(movie)">
+          Add to Watchlist
+        </button>
       </div>
     </div>
     <!-- Displayed when no movies match the filter -->

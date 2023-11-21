@@ -8,10 +8,10 @@ let app = angular
       .when("/index", {
         templateUrl: "../demo.html",
       })
-      .when("/demo", {
-        templateUrl: "../index.html",
-        controller: "HeaderController",
-      })
+      // .when("/demo", {
+      //   templateUrl: "../index.html",
+      //   controller: "HeaderController",
+      // })
       .when("/directory", {
         templateUrl: "../directory.html",
         controller: "MoviesController",
@@ -55,8 +55,7 @@ let app = angular
   })
 
   .controller("MoviesController", function ($scope, $http, WatchlistService) {
-    $scope.plotLimit = 90;
-    $scope.showFullPlot = false;
+    $scope.plotLimit = 79;
     $scope.movies = [];
     $scope.moviesPerPage = 6; // Number of movies to show initially
     $scope.moviesToLoad = 3; // Number of movies to load on each "Load More" click
@@ -64,6 +63,11 @@ let app = angular
     $scope.displayedMovies = []; // Array to store the displayed movies
     $http.get("../movies.json").then(function (data) {
       $scope.movies = data.data;
+
+      $scope.movies.forEach(function (movie) {
+        movie.plotLength = $scope.plotLimit;
+      });
+
       $scope.displayedMovies = $scope.movies.slice(0, $scope.moviesPerPage); // Initially display the first set of movies
     });
 
@@ -87,13 +91,18 @@ let app = angular
     };
 
     $scope.togglePlot = function (movie) {
-      $scope.showFullPlot = !$scope.showFullPlot;
+      console.log(movie.togglePlot);
+
+      movie.togglePlot = !movie.togglePlot;
+
+      console.log(movie.togglePlot);
 
       // Adjust the plot limit based on the toggle
-      if ($scope.showFullPlot) {
-        $scope.plotLimit = movie.Plot.length;
+      if (movie.togglePlot) {
+        movie.plotLength = movie.Plot.length;
+        console.log(movie.plotLength);
       } else {
-        $scope.plotLimit = 90; // Set it to your initial limit
+        movie.plotLength = 79; // Set it to your initial limit
       }
     };
 
