@@ -1,28 +1,40 @@
+<link rel="stylesheet" href="/watchlist.css" />
 <div class="container m-3">
-    <h2 class="text-center mt-3">Movie List</h2>
-    <table ng-if="watchlist.length > 0" class="table table-bordered table-striped">
-        <thead class="thead-light">
-            <tr>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Release Date</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody ng-repeat="list in watchlist">
-            <td><img ng-src="{{ list.Images[0] }}" class="img-fluid" style="max-width: 100px; max-height: 100px;" />
-            </td>
-            <td>{{ list.Title }}</td>
-            <td>{{ list.Released }}</td>
-            <td>
-                <button class="btn btn-success btn-sm">Watched</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
-            </td>
-        </tbody>
-    </table>
-    <!-- Displayed when no movies match the filter -->
-    <div ng-if="watchlist.length === 0" class="text-center mt-3">
-        <h3>No List Exists.</h3>
-    </div>
-
+  <h2 class="text-center mt-3">Movie List</h2>
+  <table
+    ng-if="watchlist.length > 0"
+    class="table table-bordered table-striped"
+  >
+    <thead class="thead-light">
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="list in watchlist">
+      <td>
+        <img
+          ng-src="{{ list.Images[0] }}"
+          class="img-fluid"
+          style="max-width: 100px; max-height: 100px"
+        />
+      </td>
+      <td>{{ list.Title }}</td>
+      <td>{{ list.Released }}</td>
+      <td>
+        <button ng-click="watchedMovie(list)" class="btn btn-success btn-sm">
+          <i class="ion-eye"></i>
+        </button>
+        <button ng-click="removeMovie(list)" class="btn btn-danger btn-sm">
+          <i class="ion-trash-b"></i>
+        </button>
+      </td>
+    </tbody>
+  </table>
+  <!-- Displayed when no movies match the filter -->
+  <div ng-if="watchlist.length === 0" class="text-center mt-3">
+    <h3>No List Exists.</h3>
+  </div>
 </div>

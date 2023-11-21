@@ -147,6 +147,17 @@ let app = angular
 
   .controller("WatchlistController", function ($scope, WatchlistService) {
     $scope.watchlist = WatchlistService.getWatchlist();
+
+    $scope.watchedMovie = function (movie) {};
+
+    $scope.removeMovie = function (movieToRemove) {
+      const index = $scope.watchlist.indexOf(movieToRemove);
+      if (index > -1) {
+        $scope.watchlist.splice(index, 1);
+      } else {
+        console.log("Movie not found in the list");
+      }
+    };
   })
 
   .controller("HeaderController", function ($scope, $location) {
