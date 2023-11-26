@@ -122,33 +122,46 @@ let app = angular
       // Update the CSS class for card-columns based on the selected value
       switch ($scope.moviesPerRow) {
         case "2":
-          $scope.columnClass = "col-md-12"; // Full width for 1 movie per row
+          $scope.columnStyle = {
+            "column-count": $scope.moviesPerRow,
+          };
           break;
         case "3":
-          $scope.columnClass = "col-md-4 offset-md-4"; // Half width for 2 movies per row
+          $scope.columnStyle = {
+            "column-count": $scope.moviesPerRow,
+          };
           break;
         case "4":
-          $scope.columnClass = "col-md-4"; // One-third width for 3 movies per row
+          $scope.columnStyle = {
+            "column-count": $scope.moviesPerRow,
+            h4: {
+              "font-size": "1.3rem",
+            },
+          };
           break;
-        // Add more cases for other values if needed
         default:
-          $scope.columnClass = "col-md-4 offset-md-4"; // Default to one-third width
+          $scope.columnStyle = {
+            "column-count": 3,
+          };
           break;
       }
     };
     $scope.updateColumns(); // Call the function initially to set the default column class
 
     // Function to dynamically apply the column class to cards based on selection
-    // $scope.getCardClass = function () {
-    //   return $scope.columnClass // Add any additional margin if needed
-    // };
+    $scope.getCardClass = function () {
+      return $scope.columnClass; // Add any additional margin if needed
+    };
     // };
   })
 
   .controller("WatchlistController", function ($scope, WatchlistService) {
     $scope.watchlist = WatchlistService.getWatchlist();
+    $scope.watchedMovie = function (movie) {
+      movie.watched = true;
 
-    $scope.watchedMovie = function (movie) {};
+      console.log(movie.watched);
+    };
 
     $scope.removeMovie = function (movieToRemove) {
       const index = $scope.watchlist.indexOf(movieToRemove);

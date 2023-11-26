@@ -27,16 +27,16 @@
     </div>
   </div>
 
-  <div class="card-columns mt-5">
+  <div class="card-columns mt-5" ng-style="columnStyle">
     <div
       class="card"
       ng-repeat="movie in displayedMovies | filter: { Title: movieName } | orderBy: 'Title'"
       ng-class="getCardClass()"
     >
       <img
+        style="height: 200px"
         ng-src="{{ movie.Images[0] }}"
-        style="width: 353px; height: 250px"
-        class="card-img-top"
+        class="card-img-top img-fluid"
       />
       <div class="card-body">
         <h4 class="card-title">{{ movie.Title }}</h4>

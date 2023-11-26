@@ -13,7 +13,10 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody ng-repeat="list in watchlist">
+    <tbody
+      ng-repeat="list in watchlist"
+      ng-class="{ 'watched-row': list.watched }"
+    >
       <td>
         <img
           ng-src="{{ list.Images[0] }}"
@@ -24,11 +27,23 @@
       <td>{{ list.Title }}</td>
       <td>{{ list.Released }}</td>
       <td>
-        <button ng-click="watchedMovie(list)" class="btn btn-success btn-sm">
+        <button
+          ng-mouseenter="watched = true"
+          ng-mouseleave="watched = false"
+          ng-click="watchedMovie(list)"
+          class="btn btn-success btn-sm"
+        >
           <i class="ion-eye"></i>
+          <span ng-show="watched">Watched</span>
         </button>
-        <button ng-click="removeMovie(list)" class="btn btn-danger btn-sm">
-          <i class="ion-trash-b"></i>
+        <button
+          ng-mouseenter="showText = true"
+          ng-mouseleave="showText = false"
+          ng-click="removeMovie(list)"
+          class="btn btn-danger btn-sm"
+        >
+          <i class="ion-close"></i>
+          <span ng-show="showText">Remove</span>
         </button>
       </td>
     </tbody>

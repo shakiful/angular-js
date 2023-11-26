@@ -6,3 +6,8 @@ table td {
   text-align: center;
   vertical-align: middle !important;
 }
+
+.watched-row {
+  background-color: black;
+  border-bottom: 1px solid black; /* Add your preferred styling for the line */
+}
